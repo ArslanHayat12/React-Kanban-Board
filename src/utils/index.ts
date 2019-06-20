@@ -5,6 +5,7 @@ import flatten from "ramda/src/flatten";
 import map from "ramda/src/map";
 import uniqid from "uniqid";
 
+//Drag Drop Card replacing of cards from 1 column to other
 export const applyDrag = (arr: any, dragResult: any) => {
   const { removedIndex, addedIndex, payload } = dragResult;
   if (removedIndex === null && addedIndex === null) return arr;
@@ -20,23 +21,19 @@ export const applyDrag = (arr: any, dragResult: any) => {
   return result;
 };
 
+//Set board and card items to localstorage
 export const setItem = (key: string, data: any) => {
   return localStorage.setItem(key, JSON.stringify(data));
 };
 
+//Get board and card items to localstorage
 export const getItem = (key: string) => {
   if (localStorage.getItem(key))
     return JSON.parse(localStorage.getItem(key) || "");
   return null;
 };
-export const generateItems = (count: any, creator: any) => {
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    result.push(creator(i));
-  }
-  return result;
-};
 
+//Generate Board Data
 export const generateBoardItems = () => {
   return map(
     (board: any) => ({
@@ -52,6 +49,8 @@ export const generateBoardItems = () => {
     getItem("boardItems") || []
   );
 };
+
+//Generate Cards Data
 export const generateCardItems = (boardId: string) => {
   return map(
     (card: any) => ({
@@ -68,6 +67,7 @@ export const generateCardItems = (boardId: string) => {
   );
 };
 
+//Card colors
 const cardColors = [
   "azure",
   "beige",
@@ -80,11 +80,14 @@ const cardColors = [
   "ivory",
   "khaki"
 ];
+
+//Card colors picking
 export const pickColor = () => {
   let rand = Math.floor(Math.random() * 10);
   return cardColors[rand];
 };
 
+//Initial states of board and cards
 export const initialState = () => ({
   board: {
     type: "container",
@@ -95,14 +98,17 @@ export const initialState = () => ({
   }
 });
 
+//Cloning of data
 export const makeCopy = (source: any) => {
   return Object.assign({}, source);
 };
 
+//Get selected item
 export const getSelectedItem = (key: string, value: any, columnData: any) => {
   return find(propEq(key, value))(columnData);
 };
 
+//Store board and card items to localstorage
 export const storeItems = (
   type: string | undefined,
   values: any,
@@ -161,18 +167,43 @@ export const storeItems = (
   }
 };
 
-export const deleteItems = (id: string) => {
-  if (getItem("cardItems")) {
+// Delete card items
+export const deleteItems = (id: string, prop: string, key: string) => {
+  if (key === "cardItems") {
+    if (getItem(key)) {
+      if (id) {
+        const updatedItem = filter(
+          (item: any) => item[prop] !== id,
+          getItem(key)
+        );
+        setItem(key, updatedItem);
+      }
+    }
+  } else {
+    if (getItem(key)) {
+      if (id) {
+        const updatedItem = filter(
+          (item: any) => item[prop] !== id,
+          getItem(key)
+        );
+        setItem(key, updatedItem);
+      }
+    }
+    deleteItems(id, "boardId", "cardItems");
+  }
+  return;
+};
+// Delete board items
+export const deleteBoardItems = (id: string, key: string) => {
+  if (getItem(key)) {
     if (id) {
-      const updatedItem = filter(
-        (item: any) => item.key !== id,
-        getItem("cardItems")
-      );
-      setItem("cardItems", updatedItem);
+      const updatedItem = filter((item: any) => item.key !== id, getItem(key));
+      setItem(key, updatedItem);
     }
   }
 };
 
+//Update default object on board draging
 export const updateObject = (
   arr1: any,
   arr2: any,
@@ -182,9 +213,10 @@ export const updateObject = (
   return map((obj: any) => {
     return getSelectedItem(key, obj[key], arr2[prop]);
     //return arr2[prop].find((o: any) => o[key] === obj[key]) || obj;
-  },arr1[prop]);
+  }, arr1[prop]);
 };
 
+//Generation of card data for localstorage
 export const makeObject = (data: any) => {
   const cardItems = map(values => {
     const boardId = values.id;
@@ -202,10 +234,15 @@ export const makeObject = (data: any) => {
   return;
 };
 
+//Reodering of board data for localstorage and setting
 export const reOrderBoard = (boards: any) => {
   setItem(
     "boardItems",
     map((x: any) => ({ key: x.id, title: x.title }), boards)
   );
   return;
+};
+
+export const getMessage = (id: string, message1: string, message2: string) => {
+  return id ? message1 : message2;
 };

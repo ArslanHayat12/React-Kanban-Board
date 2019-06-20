@@ -18,6 +18,7 @@ hr{
 }
 .delete-icon{
   color: red;
+  float: right;
 }
 .header{
   background-color:#108ee9 ;

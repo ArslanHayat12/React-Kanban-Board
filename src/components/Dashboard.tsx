@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-smooth-dnd";
 import {
   applyDrag,
@@ -6,13 +6,14 @@ import {
   makeCopy,
   updateObject,
   makeObject,
-  reOrderBoard
+  reOrderBoard,
+  deleteItems
 } from "../utils/";
 import { ToDoState } from "../interfaces/";
 import { Board } from "./Board";
 import "../styles/index.css";
 
-const Dashboard = ({ data,updateAction }: any) => {
+const Dashboard = ({ data, updateAction }: any) => {
   const [state, setState] = useState<ToDoState>(initialState());
 
   useEffect(() => {
@@ -44,7 +45,13 @@ const Dashboard = ({ data,updateAction }: any) => {
           className: "cards-drop-preview"
         }}
       >
-        <Board data={data}children={state.board.children} action={updateState} updateAction={updateAction} />
+      
+        <Board
+          data={data}
+          children={state.board.children}
+          action={updateState}
+          updateAction={updateAction}
+        />
       </Container>
     </div>
   );
