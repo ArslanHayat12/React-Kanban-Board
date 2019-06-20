@@ -1,0 +1,84 @@
+hr{
+  margin-top: 0px;
+}
+.buttons{
+  float: right;
+}
+.card-content {
+  display: flex;
+}
+
+.title {
+  flex:1 1 85%;
+  justify-content: flex-start;
+}
+.icons {
+  flex:1 1 10%;
+  justify-content: flex-end;
+}
+.delete-icon{
+  color: red;
+}
+.header{
+  background-color:#108ee9 ;
+}
+.footer {
+  position: fixed;
+  height: 50px;
+  background-color:#108ee9 ;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+}
+
+
+.card-container {
+  width: 320px;
+  padding: 10px;
+  margin: 5px;
+  margin-right: 45px;
+  background-color: #108ee9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+}
+
+.card {
+  margin: 5px;
+  /* border: 1px solid #ccc; */
+  background-color: white;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+  padding: 10px;
+}
+
+.card-column-header {
+  font-size: 18px;
+}
+
+.column-drag-handle {
+  cursor: move;
+  padding: 5px;
+}
+
+
+.card-transition {
+  transition: transform 0.18s ease;
+  transform: rotateZ(5deg);
+}
+
+.card-drop {
+  transition: transform 0.18s ease-in-out;
+  transform: rotateZ(0deg);
+}
+
+
+.drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  border: 1px dashed #abc;
+  margin: 5px;
+}
+
+.cards-drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  border: 1px dashed #abc;
+  margin: 5px 45px 5px 5px;
+}
