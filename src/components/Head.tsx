@@ -1,8 +1,9 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Button } from "antd";
+import React, { useState, Fragment } from "react";
+import { Button, Input } from "antd";
 import Popup from "./Popup";
 import "antd/dist/antd.css";
 import "../styles/index.css";
+const Search = Input.Search;
 const Head = (props: any) => {
   const [state, setState] = useState<{ visible?: boolean; type?: string }>({
     visible: false,
@@ -11,19 +12,24 @@ const Head = (props: any) => {
   const showModal = (type: string) => {
     setState({ visible: true, type });
   };
-  const handleClose = (upadted: any,message:string) => {
+  const handleClose = (upadted: any, message: string) => {
     setState({ visible: false });
-    props.updateAction(upadted,message);
+    props.updateAction(upadted, message);
   };
 
   return (
     <Fragment>
       <b>Kanban Board</b>
       <div className="buttons">
+        <Search
+          placeholder="input search text"
+          onChange={e =>  props.updateAction(e.target.value,"isSearch")}
+          style={{ width: 200 }}
+          
+        />{" "}
         <Button type="primary" onClick={() => showModal("board")}>
           Create Board
         </Button>{" "}
-        &nbsp;
         <Button type="primary" onClick={() => showModal("card")}>
           Create Card
         </Button>

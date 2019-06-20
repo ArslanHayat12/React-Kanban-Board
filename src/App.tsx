@@ -19,8 +19,8 @@ const App: React.FC = () => {
         <Head updateAction={updateAction} />
       </Header>
       <Content className="conent">
-        {message ? <Alert message={message} type="success" showIcon /> : null}
-        <Dashboard data={state} updateAction={updateAction} />
+        {message && message !=="isSearch" ? <Alert message={message} type="success" showIcon /> : null}
+        <Dashboard data={state} message={message}updateAction={updateAction} />
       </Content>
 
       <Footer className="footer" />

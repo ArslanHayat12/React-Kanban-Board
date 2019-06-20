@@ -242,7 +242,32 @@ export const reOrderBoard = (boards: any) => {
   );
   return;
 };
-
+//Make messages
 export const getMessage = (id: string, message1: string, message2: string) => {
   return id ? message1 : message2;
+};
+//Search content
+export const searchRecords = (
+  items: any,
+  key1: string,
+  key2: string,
+  value: string
+) => {
+  return {
+    board: {
+      type: "container",
+      props: {
+        orientation: "horizontal"
+      },
+      children: items[key1].filter((item: any) => {
+       return  item.title.includes(value) ||
+          (item[key2] &&
+            item[key2].some((card: any) => {
+              return (
+                card.title.includes(value) || card.description.includes(value)
+              );
+            }));
+      })
+    }
+  };
 };

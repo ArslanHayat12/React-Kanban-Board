@@ -7,17 +7,27 @@ import {
   updateObject,
   makeObject,
   reOrderBoard,
-  deleteItems
+  searchRecords
 } from "../utils/";
 import { ToDoState } from "../interfaces/";
 import { Board } from "./Board";
 import "../styles/index.css";
 
-const Dashboard = ({ data, updateAction }: any) => {
+const Dashboard = ({ data, updateAction, message }: any) => {
   const [state, setState] = useState<ToDoState>(initialState());
 
   useEffect(() => {
-    setState(initialState());
+    if (message === "isSearch") {
+      const searched = searchRecords(
+        initialState().board,
+        "children",
+        "card",
+        data
+      );
+      setState(searched);
+    } else {
+      setState(initialState());
+    }
   }, [data]);
 
   const updateState = (updatedBoard: any) => {
@@ -45,7 +55,6 @@ const Dashboard = ({ data, updateAction }: any) => {
           className: "cards-drop-preview"
         }}
       >
-      
         <Board
           data={data}
           children={state.board.children}
