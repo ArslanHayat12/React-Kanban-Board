@@ -18,7 +18,7 @@ const App: React.FC = () => {
       <Header className="header">
         <Head updateAction={updateAction} />
       </Header>
-      <Content>
+      <Content className="conent">
         {message ? <Alert message={message} type="success" showIcon /> : null}
         <Dashboard data={state} updateAction={updateAction} />
       </Content>
