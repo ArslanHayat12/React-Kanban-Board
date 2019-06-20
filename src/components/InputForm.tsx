@@ -15,6 +15,7 @@ const InputForm = (props: any) => {
     canDelete,
     onDelete
   } = props;
+  const { TextArea } = Input;
   const { getFieldDecorator } = form;
   const boardItems = getItem("boardItems") || [];
   const selectedItem = cardId
@@ -58,7 +59,7 @@ const InputForm = (props: any) => {
                       message: `Please enter description of the ${type}`
                     }
                   ]
-                })(<Input type="textarea" />)}
+                })(<TextArea />)}
               </Form.Item>
               <Form.Item label="Board">
                 {getFieldDecorator("boardId", {
