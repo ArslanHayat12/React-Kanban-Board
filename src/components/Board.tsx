@@ -31,7 +31,7 @@ export const Board = ({ children, action, updateAction }: any) => {
             <div className={column.props.className}>
               <div className="card-column-header">
                 <span className="column-drag-handle">&#x2630;</span>
-                {column.name}
+                {column.title}
               </div>
               <Container
                 {...column.props}

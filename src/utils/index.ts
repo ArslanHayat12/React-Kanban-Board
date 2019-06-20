@@ -42,7 +42,7 @@ export const generateBoardItems = () => {
     (board: any) => ({
       id: board.key,
       type: "container",
-      name: board.title,
+      title: board.title,
       props: {
         orientation: "vertical",
         className: "card-container"
@@ -62,7 +62,7 @@ export const generateCardItems = (boardId: string) => {
         style: { backgroundColor: pickColor() }
       },
       title: card.title,
-      data: card.description
+      description: card.description
     }),
     filter((card: any) => card.boardId === boardId, getItem("cardItems") || [])
   );
@@ -179,9 +179,10 @@ export const updateObject = (
   prop: string,
   key: string
 ) => {
-  return arr1[prop].map((obj: any) => {
-    return arr2[prop].find((o: any) => o[key] === obj[key]) || obj;
-  });
+  return map((obj: any) => {
+    return getSelectedItem(key, obj[key], arr2[prop]);
+    //return arr2[prop].find((o: any) => o[key] === obj[key]) || obj;
+  },arr1[prop]);
 };
 
 export const makeObject = (data: any) => {
@@ -191,7 +192,7 @@ export const makeObject = (data: any) => {
       (card: any) => ({
         key: card.id,
         title: card.title || "",
-        description: card.data,
+        description: card.description,
         boardId: boardId
       }),
       filter(Boolean, values.card)
@@ -204,7 +205,7 @@ export const makeObject = (data: any) => {
 export const reOrderBoard = (boards: any) => {
   setItem(
     "boardItems",
-    map((x: any) => ({ key: x.id, title: x.name }), boards)
+    map((x: any) => ({ key: x.id, title: x.title }), boards)
   );
   return;
 };

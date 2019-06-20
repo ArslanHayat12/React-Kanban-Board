@@ -50,7 +50,7 @@ export const Card = ({ card, updateAction }: any) => {
                 </div>
               </div>
               <hr />
-              <p>{card.data}</p>
+              <p>{card.description}</p>
             </div>
           </Draggable>
         );
