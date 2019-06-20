@@ -19,9 +19,9 @@ export const Card = ({ card, updateAction }: any) => {
   const showModal = (cardId: string) => {
     setState({ type: "card", visible: true, cardId });
   };
-  const handleClose = (upadted: any, isData: boolean) => {
+  const handleClose = (upadted: any, message: string) => {
     setState({ type: "card", visible: false });
-    if (isData) updateAction(upadted);
+   if(message) updateAction(upadted,message);
   };
 
   const deleteCard = (cardId: any) => {

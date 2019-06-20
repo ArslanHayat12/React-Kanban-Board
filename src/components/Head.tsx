@@ -11,9 +11,9 @@ const Head = (props: any) => {
   const showModal = (type: string) => {
     setState({ visible: true, type });
   };
-  const handleClose = (upadted: any) => {
+  const handleClose = (upadted: any,message:string) => {
     setState({ visible: false });
-    props.updateAction(upadted);
+    props.updateAction(upadted,message);
   };
 
   return (

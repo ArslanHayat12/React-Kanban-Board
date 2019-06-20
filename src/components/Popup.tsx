@@ -15,7 +15,7 @@ const Popup = (props: any) => {
       }
       storeItems(type,values,cardId);
       form.resetFields();
-      handleClose(values,"true");
+      handleClose(values,cardId?"Card Updation successful.":"Creation successful");
     });
   };
   const handleDelete = (formData: any) => {
@@ -25,7 +25,7 @@ const Popup = (props: any) => {
         return;
       }
       deleteItems(cardId);
-      handleClose(cardId,"true");
+      handleClose(cardId,"Card Deleted successfully.");
     });
   };
   return (
