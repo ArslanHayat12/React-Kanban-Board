@@ -13,22 +13,22 @@ import { ToDoState } from "../interfaces/";
 import { Board } from "./Board";
 import "../styles/index.css";
 
-const Dashboard = ({ data, updateAction, message }: any) => {
+const Dashboard = ({ data }: any) => {
   const [state, setState] = useState<ToDoState>(initialState());
 
   useEffect(() => {
-    if (message === "isSearch") {
+    if (data.message === "isSearch") {
       const searched = searchRecords(
         initialState().board,
         "children",
         "card",
-        data
+        data.value
       );
       setState(searched);
     } else {
       setState(initialState());
     }
-  }, [data]);
+  }, [data.value,data.message]);
 
   const updateState = (updatedBoard: any) => {
     const board = makeCopy(state.board);
@@ -36,6 +36,7 @@ const Dashboard = ({ data, updateAction, message }: any) => {
     makeObject(board.children);
     setState({ board });
   };
+  
   const onColumnDrop = (dropResult: any) => {
     const board = makeCopy(state.board);
     board.children = applyDrag(board.children, dropResult);
@@ -59,7 +60,6 @@ const Dashboard = ({ data, updateAction, message }: any) => {
           data={data}
           children={state.board.children}
           action={updateState}
-          updateAction={updateAction}
         />
       </Container>
     </div>

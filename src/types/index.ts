@@ -1,2 +1,4 @@
-export type types = {
-  };
+
+export type AppContextType= {
+ 
+}

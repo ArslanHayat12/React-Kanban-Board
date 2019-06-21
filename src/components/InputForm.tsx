@@ -29,7 +29,7 @@ const InputForm = (props: any) => {
       okText={title}
       onCancel={onCancel}
       onOk={() =>
-        canDelete ? onDelete( getMessage(cardId,`${selectedItem.title} card deleted successfully.`, `${type} board deleted successfully.`)) : onCreate(form)
+        canDelete ? onDelete( getMessage(cardId,`Card "${selectedItem.title}" deleted successfully.`, `Board "${type}" deleted successfully.`)) : onCreate(form)
       }
     >
       {canDelete ? (

@@ -1,31 +1,34 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import Dashboard from "./components/Dashboard";
-import Head from "./components/Head";
+import Header from "./components/Header";
+import { reducer } from "./reducer/";
+import { initialContent, AppContext } from "./context/";
 import { Layout, Alert } from "antd";
 import "antd/dist/antd.css";
 import "./styles/index.css";
-const { Header, Footer, Content } = Layout;
+const { Footer, Content } = Layout;
+
 const App: React.FC = () => {
-  const [state, setState] = useState("");
-  const [message, setMessage] = useState<string>("");
-  const updateAction = (updated: any,message:string) => {
-    setState(updated);
-    setMessage(message);
-    setTimeout(() => setMessage(""), 3000);
-  };
+  const [content, dispatch] = useReducer(reducer, initialContent);
   return (
     <Layout>
-      <Header className="header">
-        <Head updateAction={updateAction} />
-      </Header>
-      <Content className="conent">
-        {message && message !=="isSearch" ? <Alert message={message} type="success" showIcon /> : null}
-        <Dashboard data={state} message={message}updateAction={updateAction} />
-      </Content>
+      <AppContext.Provider value={{ content, dispatch }}>
+        <Header />
+        <Content className="content">
+          {content.message && content.message !== "isSearch" ? (
+            <Alert
+              message={content.message}
+              type="success"
+              showIcon
+              className="alert"
+            />
+          ) : null}
+          <Dashboard data={content} />
+        </Content>
+      </AppContext.Provider>
 
       <Footer className="footer" />
     </Layout>
   );
 };
-
 export default App;

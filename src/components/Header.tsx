@@ -1,31 +1,38 @@
-import React, { useState, Fragment } from "react";
-import { Button, Input } from "antd";
+import React, { useState, Fragment, useContext } from "react";
+import { AppContext } from "../context/";
+import { Button, Input,Layout } from "antd";
 import Popup from "./Popup";
 import "antd/dist/antd.css";
 import "../styles/index.css";
 const Search = Input.Search;
-const Head = (props: any) => {
+const { Header }  = Layout;
+const HeaderContent = () => {
+  const { dispatch } = useContext(AppContext);
   const [state, setState] = useState<{ visible?: boolean; type?: string }>({
     visible: false,
     type: "board"
   });
+  
   const showModal = (type: string) => {
     setState({ visible: true, type });
   };
-  const handleClose = (upadted: any, message: string) => {
+
+  const handleClose = (value: any, message: string) => {
     setState({ visible: false });
-    props.updateAction(upadted, message);
+    if (dispatch) dispatch({ type: "UPDATE_DATA", value, message });
+    setTimeout(() => {
+      if (dispatch) dispatch({ type: "UPDATE_DATA", value: "", message: "" });
+    }, 3000);
   };
 
   return (
-    <Fragment>
+    <Header className="header">
       <b>Kanban Board</b>
       <div className="buttons">
         <Search
           placeholder="input search text"
-          onChange={e =>  props.updateAction(e.target.value,"isSearch")}
+          onChange={e => dispatch && dispatch({ type: "UPDATE_DATA", value:e.target.value, message:"isSearch"})}
           style={{ width: 200 }}
-          
         />{" "}
         <Button type="primary" onClick={() => showModal("board")}>
           Create Board
@@ -40,8 +47,8 @@ const Head = (props: any) => {
           handleClose={handleClose}
         />
       </div>
-    </Fragment>
+    </Header>
   );
 };
 
-export default Head;
+export {  HeaderContent as default};

@@ -1,9 +1,18 @@
 hr{
   margin-top: 0px;
 }
+
+.alert{
+  position: fixed;
+  bottom: 50px;
+  right: 0%;
+  width: 25%;
+}
+
 .buttons{
   float: right;
 }
+
 .card-content {
   display: flex;
 }
@@ -12,23 +21,26 @@ hr{
   flex:1 1 85%;
   justify-content: flex-start;
 }
+
 .icons {
   flex:1 1 10%;
   justify-content: flex-end;
 }
+
 .delete-icon{
   color: red;
   float: right;
 }
+
 .header{
   font-size: large;
   color: azure; 
 }
-.conent{
+
+.content{
   background-color:azure ;
   height: -webkit-fill-available;
 }
-
 
 .footer {
   position: fixed;
@@ -39,7 +51,6 @@ hr{
   right: 0px;
   margin-bottom: 0px;
 }
-
 
 .card-container {
   width: 320px;
@@ -67,7 +78,6 @@ hr{
   padding: 5px;
 }
 
-
 .card-transition {
   transition: transform 0.18s ease;
   transform: rotateZ(5deg);
@@ -77,7 +87,6 @@ hr{
   transition: transform 0.18s ease-in-out;
   transform: rotateZ(0deg);
 }
-
 
 .drop-preview {
   background-color: rgba(150, 150, 200, 0.1);

@@ -1,9 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useContext } from "react";
 import { Draggable } from "react-smooth-dnd";
-import { Icon, Divider } from "antd";
+import {AppContext} from "../context/";
+import { Icon } from "antd";
 import Popup from "./Popup";
 import "../styles/index.css";
-export const Card = ({ card, updateAction }: any) => {
+
+export const Card = ({ card }: any) => {
+  const { dispatch } = useContext(AppContext);
   const [state, setState] = useState<{
     visible?: boolean;
     type?: string;
@@ -16,17 +19,23 @@ export const Card = ({ card, updateAction }: any) => {
     cardId: "",
     canDelete: false
   });
+  
   const showModal = (cardId: string) => {
     setState({ type: "card", visible: true, cardId });
   };
-  const handleClose = (upadted: any, message: string) => {
+
+  const handleClose = (value: string, message: string) => {
     setState({ type: "card", visible: false });
-   if(message) updateAction(upadted,message);
+    if(dispatch) dispatch({type:"UPDATE_DATA",value,message});
+    setTimeout(() => {
+      if (dispatch) dispatch({ type: "UPDATE_DATA", value: "", message: "" });
+    }, 3000);
   };
 
   const deleteCard = (cardId: any) => {
     setState({ type: "card", visible: true, cardId, canDelete: true });
   };
+  
   return (
     <Fragment>
       {card.filter(Boolean).map((card: any) => {

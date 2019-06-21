@@ -1,9 +1,9 @@
+
 import find from "ramda/src/find";
 import filter from "ramda/src/filter";
 import propEq from "ramda/src/propEq";
 import flatten from "ramda/src/flatten";
 import map from "ramda/src/map";
-import uniqid from "uniqid";
 
 //Drag Drop Card replacing of cards from 1 column to other
 export const applyDrag = (arr: any, dragResult: any) => {
@@ -127,12 +127,12 @@ export const storeItems = (
         setItem("boardItems", updatedItem);
       } else {
         setItem("boardItems", [
-          { key: uniqid(), title: values.title || "" },
+          { key: values.key, title: values.title || "" },
           ...getItem("boardItems")
         ]);
       }
     } else
-      setItem("boardItems", [{ key: uniqid(), title: values.title || "" }]);
+      setItem("boardItems", [{ key: values.key, title: values.title || "" }]);
   } else {
     if (getItem("cardItems")) {
       if (id) {
@@ -147,7 +147,7 @@ export const storeItems = (
       } else {
         setItem("cardItems", [
           {
-            key: uniqid(),
+            key: values.key,
             title: values.title || "",
             description: values.description,
             boardId: values.boardId
@@ -158,7 +158,7 @@ export const storeItems = (
     } else
       setItem("cardItems", [
         {
-          key: uniqid(),
+          key: values.key,
           title: values.title || "",
           description: values.description,
           boardId: values.boardId
@@ -271,3 +271,5 @@ export const searchRecords = (
     }
   };
 };
+
+
