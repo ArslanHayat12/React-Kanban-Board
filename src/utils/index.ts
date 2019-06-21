@@ -57,7 +57,7 @@ export const generateCardItems = (boardId: string) => {
       id: card.key,
       props: {
         className: "card",
-        style: { backgroundColor: pickColor() }
+        style: { backgroundColor: "azure" }
       },
       title: card.title,
       description: card.description
@@ -66,25 +66,25 @@ export const generateCardItems = (boardId: string) => {
   );
 };
 
-//Card colors
-const cardColors = [
-  "azure",
-  "beige",
-  "bisque",
-  "blanchedalmond",
-  "burlywood",
-  "cornsilk",
-  "gainsboro",
-  "ghostwhite",
-  "ivory",
-  "khaki"
-];
+// //Card colors
+// const cardColors = [
+//   "azure",
+//   "beige",
+//   "bisque",
+//   "blanchedalmond",
+//   "burlywood",
+//   "cornsilk",
+//   "gainsboro",
+//   "ghostwhite",
+//   "ivory",
+//   "khaki"
+// ];
 
-//Card colors picking
-export const pickColor = () => {
-  let rand = Math.floor(Math.random() * 10);
-  return cardColors[rand];
-};
+// //Card colors picking
+// export const pickColor = () => {
+//   let rand = Math.floor(Math.random() * 10);
+//   return cardColors[rand];
+// };
 
 //Initial states of board and cards
 export const initialState = () => ({
