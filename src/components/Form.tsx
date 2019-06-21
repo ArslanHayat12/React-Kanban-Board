@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import { Modal, Form, Input, Select } from "antd";
 import "antd/dist/antd.css";
-import { getItem, getSelectedItem, getMessage } from "../utils/";
+import { getItem, getSelectedItem, getMessage } from "../utils";
 const { Option } = Select;
-const InputForm = (props: any) => {
+const InputForm =Form.create<any>({ name: "form_in_modal" })( (props: any) => {
   const {
     visible,
     title,
@@ -38,7 +38,7 @@ const InputForm = (props: any) => {
               )
             )
           : onCreate(form)
-      }    
+      }
     >
       {canDelete ? (
         getMessage(
@@ -59,6 +59,7 @@ const InputForm = (props: any) => {
               ]
             })(<Input />)}
           </Form.Item>
+
           {type === "card" ? (
             <Fragment>
               <Form.Item label="Description">
@@ -96,6 +97,6 @@ const InputForm = (props: any) => {
       )}
     </Modal>
   );
-};
+});
 
-export default Form.create<any>({ name: "form_in_modal" })(InputForm);
+export {InputForm as default};

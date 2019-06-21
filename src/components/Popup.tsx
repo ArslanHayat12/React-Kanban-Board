@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import uniqid from "uniqid";
-import InputForm from "./InputForm";
+import Form from "./Form";
 import { getMessage, storeItems, deleteItems } from "../utils/";
 import "antd/dist/antd.css";
 
@@ -45,7 +45,7 @@ const Popup = (props: any) => {
 
   return (
     <div>
-      <InputForm
+      <Form
         title={title}
         type={type}
         visible={visible}

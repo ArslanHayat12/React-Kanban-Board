@@ -224,6 +224,7 @@ export const searchRecords = (
   key2: string,
   value: string
 ) => {
+  value=value.toLowerCase();
   return {
     board: {
       type: "container",
@@ -232,11 +233,11 @@ export const searchRecords = (
       },
       children: items[key1].filter((item: any) => {
         return (
-          item.title.includes(value) ||
+          item.title.toLowerCase().includes(value) ||
           (item[key2] &&
             item[key2].some((card: any) => {
               return (
-                card.title.includes(value) || card.description.includes(value)
+                card.title.toLowerCase().includes(value) || card.description.toLowerCase().includes(value)
               );
             }))
         );
