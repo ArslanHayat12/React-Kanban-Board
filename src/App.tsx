@@ -1,12 +1,12 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useMemo } from "react";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { reducer } from "./reducer/";
 import { initialContent, AppContext } from "./context/";
-import { Layout, Alert } from "antd";
+import { Layout } from "antd";
 import "antd/dist/antd.css";
 import "./styles/index.css";
-const { Footer, Content } = Layout;
 
 const App: React.FC = () => {
   const [content, dispatch] = useReducer(reducer, initialContent);
@@ -14,20 +14,11 @@ const App: React.FC = () => {
     <Layout>
       <AppContext.Provider value={{ content, dispatch }}>
         <Header />
-        <Content className="content">
-          {content.message && content.message !== "isSearch" ? (
-            <Alert
-              message={content.message}
-              type="success"
-              showIcon
-              className="alert"
-            />
-          ) : null}
+        <Layout.Content >
           <Dashboard data={content} />
-        </Content>
+        </Layout.Content>
       </AppContext.Provider>
-
-      <Footer className="footer" />
+      <Footer />
     </Layout>
   );
 };

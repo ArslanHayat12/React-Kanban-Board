@@ -1,4 +1,4 @@
-
-export type AppContextType= {
- 
-}
+export type AppContextType = {
+  content?: any;
+  dispatch?: any;
+};

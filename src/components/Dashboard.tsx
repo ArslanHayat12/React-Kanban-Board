@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Container } from "react-smooth-dnd";
 import {
   applyDrag,
@@ -11,6 +11,7 @@ import {
 } from "../utils/";
 import { ToDoState } from "../interfaces/";
 import { Board } from "./Board";
+import { Alert } from "antd";
 import "../styles/index.css";
 
 const Dashboard = ({ data }: any) => {
@@ -28,7 +29,7 @@ const Dashboard = ({ data }: any) => {
     } else {
       setState(initialState());
     }
-  }, [data.value,data.message]);
+  }, [data.value, data.message]);
 
   const updateState = (updatedBoard: any) => {
     const board = makeCopy(state.board);
@@ -36,7 +37,7 @@ const Dashboard = ({ data }: any) => {
     makeObject(board.children);
     setState({ board });
   };
-  
+
   const onColumnDrop = (dropResult: any) => {
     const board = makeCopy(state.board);
     board.children = applyDrag(board.children, dropResult);
@@ -45,7 +46,15 @@ const Dashboard = ({ data }: any) => {
   };
 
   return (
-    <div>
+    <div className="content">
+      {data.message && data.message !== "isSearch" ? (
+        <Alert
+          message={data.message}
+          type="success"
+          showIcon
+          className="alert"
+        />
+      ) : null}
       <Container
         orientation="horizontal"
         onDrop={onColumnDrop}
