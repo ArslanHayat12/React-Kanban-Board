@@ -1,4 +1,3 @@
-
 import find from "ramda/src/find";
 import filter from "ramda/src/filter";
 import propEq from "ramda/src/propEq";
@@ -30,7 +29,7 @@ export const setItem = (key: string, data: any) => {
 export const getItem = (key: string) => {
   if (localStorage.getItem(key))
     return JSON.parse(localStorage.getItem(key) || "");
-  return null;
+  return [];
 };
 
 //Generate Board Data
@@ -108,91 +107,64 @@ export const getSelectedItem = (key: string, value: any, columnData: any) => {
   return find(propEq(key, value))(columnData);
 };
 
+const updateItem = (key: string, values: any, data: any) => {
+  return map((item: any) => {
+    if (item.key === key) {
+      item.key = key;
+      item = values;
+    }
+    return item;
+  }, data);
+};
 //Store board and card items to localstorage
 export const storeItems = (
   type: string | undefined,
   values: any,
-  id: string
+  key: string
 ) => {
   if (type === "board") {
-    if (getItem("boardItems")) {
-      if (id) {
-        const updatedItem = map(item => {
-          if (item.key === id) {
-            item.key = id;
-            item = values;
-          }
-          return item;
-        }, getItem("boardItems"));
-        setItem("boardItems", updatedItem);
-      } else {
-        setItem("boardItems", [
-          { key: values.key, title: values.title || "" },
-          ...getItem("boardItems")
-        ]);
-      }
-    } else
-      setItem("boardItems", [{ key: values.key, title: values.title || "" }]);
+    if (key) {
+      setItem("boardItems", updateItem(key, values, getItem("boardItems")));
+    } else {
+      setItem("boardItems", [
+        { key: values.key, title: values.title || "" },
+        ...getItem("boardItems")
+      ]);
+    }
   } else {
-    if (getItem("cardItems")) {
-      if (id) {
-        const updatedItem = map(item => {
-          if (item.key === id) {
-            item = values;
-            item.key = id;
-          }
-          return item;
-        }, getItem("cardItems"));
-        setItem("cardItems", updatedItem);
-      } else {
-        setItem("cardItems", [
-          {
-            key: values.key,
-            title: values.title || "",
-            description: values.description,
-            boardId: values.boardId
-          },
-          ...getItem("cardItems")
-        ]);
-      }
-    } else
+    if (key) {
+      setItem("cardItems", updateItem(key, values, getItem("cardItems")));
+    } else {
       setItem("cardItems", [
         {
           key: values.key,
           title: values.title || "",
           description: values.description,
           boardId: values.boardId
-        }
+        },
+        ...getItem("cardItems")
       ]);
+    }
   }
 };
 
 // Delete card items
 export const deleteItems = (id: string, prop: string, key: string) => {
-  if (key === "cardItems") {
-    if (getItem(key)) {
-      if (id) {
-        const updatedItem = filter(
-          (item: any) => item[prop] !== id,
-          getItem(key)
-        );
-        setItem(key, updatedItem);
-      }
+  if (getItem(key)) {
+    if (id) {
+      const updatedItem = filter(
+        (item: any) => item[prop] !== id,
+        getItem(key)
+      );
+      setItem(key, updatedItem);
     }
-  } else {
-    if (getItem(key)) {
-      if (id) {
-        const updatedItem = filter(
-          (item: any) => item[prop] !== id,
-          getItem(key)
-        );
-        setItem(key, updatedItem);
-      }
-    }
+  }
+  if (key !== "cardItems") {
     deleteItems(id, "boardId", "cardItems");
   }
   return;
 };
+
 // Delete board items
 export const deleteBoardItems = (id: string, key: string) => {
   if (getItem(key)) {
@@ -212,7 +184,6 @@ export const updateObject = (
 ) => {
   return map((obj: any) => {
     return getSelectedItem(key, obj[key], arr2[prop]);
-    //return arr2[prop].find((o: any) => o[key] === obj[key]) || obj;
   }, arr1[prop]);
 };
 
@@ -260,16 +231,16 @@ export const searchRecords = (
         orientation: "horizontal"
       },
       children: items[key1].filter((item: any) => {
-       return  item.title.includes(value) ||
+        return (
+          item.title.includes(value) ||
           (item[key2] &&
             item[key2].some((card: any) => {
               return (
                 card.title.includes(value) || card.description.includes(value)
               );
-            }));
+            }))
+        );
       })
     }
   };
 };
-
-

@@ -55,6 +55,7 @@ const Dashboard = ({ data }: any) => {
           className="alert"
         />
       ) : null}
+
       <Container
         orientation="horizontal"
         onDrop={onColumnDrop}

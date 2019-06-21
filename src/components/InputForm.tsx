@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Modal, Form, Input, Select } from "antd";
 import "antd/dist/antd.css";
-import { getItem, getSelectedItem,getMessage} from "../utils/";
+import { getItem, getSelectedItem, getMessage } from "../utils/";
 const { Option } = Select;
 const InputForm = (props: any) => {
   const {
@@ -21,7 +21,7 @@ const InputForm = (props: any) => {
   const selectedItem = cardId
     ? getSelectedItem("key", cardId, getItem("cardItems"))
     : {};
- 
+
   return (
     <Modal
       visible={visible}
@@ -29,12 +29,23 @@ const InputForm = (props: any) => {
       okText={title}
       onCancel={onCancel}
       onOk={() =>
-        canDelete ? onDelete( getMessage(cardId,`Card "${selectedItem.title}" deleted successfully.`, `Board "${type}" deleted successfully.`)) : onCreate(form)
-      }
+        canDelete
+          ? onDelete(
+              getMessage(
+                cardId,
+                `Card "${selectedItem.title}" deleted successfully.`,
+                `Board "${type}" deleted successfully.`
+              )
+            )
+          : onCreate(form)
+      }    
     >
       {canDelete ? (
-        getMessage(cardId,`Do you want to delete ${selectedItem.title} card?`, `Do you want to delete ${type} board?`)
-       
+        getMessage(
+          cardId,
+          `Do you want to delete ${selectedItem.title} card?`,
+          `Do you want to delete ${type} board?`
+        )
       ) : (
         <Form layout="vertical">
           <Form.Item label="Title">
