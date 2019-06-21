@@ -3,6 +3,8 @@ import filter from "ramda/src/filter";
 import propEq from "ramda/src/propEq";
 import flatten from "ramda/src/flatten";
 import map from "ramda/src/map";
+import includes from "ramda/src/includes";
+import any from "ramda/src/any";
 
 //Drag Drop Card replacing of cards from 1 column to other
 export const applyDrag = (arr: any, dragResult: any) => {
@@ -224,24 +226,26 @@ export const searchRecords = (
   key2: string,
   value: string
 ) => {
-  value=value.toLowerCase();
+  value = value.toLowerCase();
   return {
     board: {
       type: "container",
       props: {
         orientation: "horizontal"
       },
-      children: items[key1].filter((item: any) => {
+      children: filter((item: any) => {
         return (
-          item.title.toLowerCase().includes(value) ||
-          (item[key2] &&
-            item[key2].some((card: any) => {
-              return (
-                card.title.toLowerCase().includes(value) || card.description.toLowerCase().includes(value)
-              );
-            }))
+          includes(value, item.title.toLowerCase()) ||
+          any((card: any) => {
+            return (
+              includes(value, card.title.toLowerCase()) ||
+              includes(value, card.description.toLowerCase())
+            );
+          }, item[key2] && item[key2])
         );
-      })
+      }, items[key1])
     }
   };
 };
+
+
