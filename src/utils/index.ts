@@ -1,10 +1,4 @@
-import find from "ramda/src/find";
-import filter from "ramda/src/filter";
-import propEq from "ramda/src/propEq";
-import flatten from "ramda/src/flatten";
-import map from "ramda/src/map";
-import includes from "ramda/src/includes";
-import any from "ramda/src/any";
+import {find,filter,propEq,flatten,map,includes,any} from "ramda";
 
 //Drag Drop Card replacing of cards from 1 column to other
 export const applyDrag = (arr: any, dragResult: any) => {
