@@ -14,8 +14,8 @@ const App: React.FC = () => {
     <Layout>
       <AppContext.Provider value={{ content, dispatch }}>
         <Header />
-        <Layout.Content >
-          <Dashboard data={content} />
+        <Layout.Content>
+          <Dashboard />
         </Layout.Content>
       </AppContext.Provider>
       <Footer />

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect,useContext,useCallback } from "react";
 import { Container } from "react-smooth-dnd";
+import { AppContext } from "../context/";
 import {
   applyDrag,
   initialState,
@@ -14,22 +15,23 @@ import { Board } from "./Board";
 import { Alert } from "antd";
 import "../styles/index.css";
 
-const Dashboard = ({ data }: any) => {
+const Dashboard = () => {
   const [state, setState] = useState<ToDoState>(initialState());
+  const { content } = useContext(AppContext);
 
   useEffect(() => {
-    if (data.message === "isSearch") {
+    if (content.message === "isSearch") {
       const searched = searchRecords(
         initialState().board,
         "children",
         "card",
-        data.value
+        content.value
       );
       setState(searched);
     } else {
       setState(initialState());
     }
-  }, [data.value, data.message]);
+  }, [content.value, content.message]);
 
   const updateState = (updatedBoard: any) => {
     const board = makeCopy(state.board);
@@ -44,12 +46,11 @@ const Dashboard = ({ data }: any) => {
     reOrderBoard(board.children);
     setState({ board });
   };
-
   return (
     <div className="content">
-      {data.message && data.message !== "isSearch" ? (
+      {content.message && content.message !== "isSearch" ? (
         <Alert
-          message={data.message}
+          message={content.message}
           type="success"
           showIcon
           className="alert"
@@ -67,7 +68,6 @@ const Dashboard = ({ data }: any) => {
         }}
       >
         <Board
-          data={data}
           children={state.board.children}
           action={updateState}
         />
